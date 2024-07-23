@@ -1,0 +1,92 @@
+.card_detail_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 6rem;
+
+  border: 5px solid;
+  border-radius: 30px;
+
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.card_detail_title {
+  text-align: center;
+}
+
+.card_detail_info {
+  margin-bottom: 50px;
+}
+
+.card_detail_info_types_stats_wrapper {
+  display: flex;
+  column-gap: 20px;
+}
+
+.card_detail_info_types_wrapper {
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 20px 0;
+
+  width: 130px;
+  padding: 10px;
+}
+
+.card_detail_info_stats_wrapper {
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 20px 0;
+
+  width: 130px;
+  padding: 10px;
+}
+
+.card_detail_info_types,
+.card_detail_info_stats {
+  display: block;
+  text-align: center;
+}
+
+.card_detail_evolution_chain_wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 20px 0;
+}
+
+.card_detail_evolution_chain {
+  width: 100%;
+  text-align: center;
+
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.poke_evolution_chain_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
+}
+
+.poke_evolution_chain_img {
+  width: 150px;
+  height: 150px;
+}
+
+.poke_evolution_chain_name {
+  margin-top: 20px;
+}

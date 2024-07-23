@@ -1,0 +1,29 @@
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid rgb(255, 255, 255, 0.5);
+  border-radius: 10%;
+  transition: 0.2s ease;
+}
+
+.cardContainer:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.cardBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 150px;
+  height: 250px;
+  flex-direction: column;
+}
+
+.pokeImg {
+  width: 150px;
+  height: 130px;
+}
