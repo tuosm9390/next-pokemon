@@ -1,10 +1,12 @@
 import Card from "@/components/Card";
 import styles from "@/styles/Home.module.css";
 import { getAllPokemon } from "@/utils/getPokemonData";
+import Input from '@mui/joy/Input';
 import Head from "next/head";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
+
 
 export default function Home() {
   const [ref, inView] = useInView();
@@ -46,28 +48,30 @@ export default function Home() {
           />
         </Head>
 
-        <div className={styles.cardWrapper}>
-          {data?.pages.map((page) =>
-            page.results.map((item, index) => {
-              return (
-                <Card
+
+          <Input placeholder="포켓몬 이름을 검색하세요." sx={{marginBottom: "30px", width: "20%"}}/>
+          <div className={styles.cardWrapper}>
+            {data?.pages.map((page) =>
+              page.results.map((item, index) => {
+                return (
+                  <Card
                   item={item}
                   key={index}
-                />
-              );
-            })
-          )}
-        </div>
-        <div className={styles.notification}>
-          {isFetchingNextPage && hasNextPage && !isLoading
-            ? "Loading..."
-            : "No search left"}
-        </div>
+                  />
+                );
+              })
+            )}
+          </div>
+          <div className={styles.notification}>
+            {isFetchingNextPage && hasNextPage && !isLoading
+              ? "Loading..."
+              : "No search left"}
+          </div>
 
-        <div
-          className={styles.observe}
-          ref={ref}
-        ></div>
+          <div
+            className={styles.observe}
+            ref={ref}
+          ></div>
       </>
     )
   );
