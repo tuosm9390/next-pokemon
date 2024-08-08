@@ -1,5 +1,5 @@
 // 색상 이름을 RGB로 변환하는 함수
-const getRgbFromColorName = (colorName) => {
+const getRgbFromColorName = colorName => {
   const tempDiv = document.createElement('div');
   tempDiv.style.color = colorName;
   document.body.appendChild(tempDiv);

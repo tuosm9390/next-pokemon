@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { colorToRgba } from "@/utils/colorToRgba";
-import { callPokeDetailData, getKoreanName } from "@/utils/getPokemonData";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import styles from "./Card.module.css";
+import { colorToRgba } from '@/utils/colorToRgba';
+import { callPokeDetailData, getKoreanName } from '@/utils/getPokemonData';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import styles from './Card.module.css';
 
 function Card({ item }) {
   const router = useRouter();
@@ -18,7 +18,7 @@ function Card({ item }) {
     data: detailData,
     error,
   } = useQuery({
-    queryKey: ["callPokeDetailData", item?.url],
+    queryKey: ['callPokeDetailData', item?.url],
     queryFn: () => callPokeDetailData(item?.url),
   });
 
@@ -29,7 +29,7 @@ function Card({ item }) {
     error: error2,
   } = useQuery({
     queryKey: [
-      "getKoreanName",
+      'getKoreanName',
       `https://pokeapi.co/api/v2/pokemon-species/${item?.name}`,
     ],
     queryFn: () =>
@@ -53,7 +53,7 @@ function Card({ item }) {
     }
   }, [detailData, data2]);
 
-  const onClick = (data) => {
+  const onClick = data => {
     router.push({
       pathname: `/${modifiedDetailData.id}`,
       query: {
@@ -73,14 +73,13 @@ function Card({ item }) {
       <div
         className={styles.cardContainer}
         style={{ backgroundColor: colorToRgba(modifiedDetailData.color, 0.5) }}
-        onClick={() => onClick(modifiedDetailData)}
-      >
+        onClick={() => onClick(modifiedDetailData)}>
         <div className={styles.cardBox}>
           <div>
             <img
               className={styles.pokeImg}
               src={
-                modifiedDetailData.sprites?.other["official-artwork"]
+                modifiedDetailData.sprites?.other['official-artwork']
                   .front_default || modifiedDetailData.sprites?.front_default
               }
               alt="image"
