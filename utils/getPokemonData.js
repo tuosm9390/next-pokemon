@@ -20,6 +20,14 @@ export const getAllPokemon = async ({ pageParam = 0 }) => {
   return response.data;
 };
 
+export const getSearchPokemon = async searchName => {
+  const response = await axios.get(
+    `https://pokeapi.co/api/v2/pokemon/${searchName}`,
+    {},
+  );
+  return response.data;
+};
+
 export const callPokeEvolutionData = async url => {
   const response = axios.get(url);
   return response;
