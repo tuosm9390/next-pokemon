@@ -1,30 +1,36 @@
 import Card from '@/components/Card';
 import styles from '@/styles/Home.module.css';
 import { getAllPokemon, getSearchPokemon } from '@/utils/getPokemonData';
+import { Button } from '@mui/joy';
 import Input from '@mui/joy/Input';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
 
 export default function Home() {
   const [ref, inView] = useInView();
   const [searchName, setSearchName] = useState('');
+  const queryClient = useQueryClient();
 
-  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['getAllPokemon', searchName],
-      queryFn:
-        searchName === '' ? getAllPokemon : () => getSearchPokemon(searchName),
-      getNextPageParam: result => {
-        const nextpage = result.next;
-        if (!nextpage) return false;
+  const {
+    data,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ['getAllPokemon', searchName],
+    queryFn: ({ pageParam = 0 }) => getAllPokemon({ pageParam, searchName }), // pageParam을 포함하여 호출
+    getNextPageParam: result => {
+      const nextPage = result.next;
+      if (!nextPage) return false;
 
-        return Number(new URL(nextpage).searchParams.get('offset'));
-      },
-      // searchName이 바뀔 때마다 쿼리를 새로고침
-      enabled: !!searchName || searchName === '',
-    });
+      return Number(new URL(nextPage).searchParams.get('offset'));
+    },
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     if (inView) {
@@ -42,38 +48,30 @@ export default function Home() {
       </Head>
 
       <Input
-        placeholder="포켓몬 이름을 검색하세요."
+        placeholder="포켓몬 번호를 검색하세요."
         sx={{ marginBottom: '30px', width: '20%' }}
         onChange={e => setSearchName(e.target.value)}
       />
       <div className={styles.cardWrapper}>
-        {searchName === '' &&
+        {searchName == '' &&
           data?.pages?.map(page =>
-            page.results.map((item, index) => {
+            page?.results?.map((item, index) => {
               return <Card item={item} key={index} />;
             }),
           )}
-        {searchName !== '' &&
-          data?.pages?.map((item, index) => {
-            // console.log({
-            //   name: searchName,
-            //   url: `https://pokeapi.co/api/v2/pokemon/${searchName}`,
-            // }),
-            return (
-              <Card
-                item={{
-                  name: searchName,
-                  url: `https://pokeapi.co/api/v2/pokemon/${searchName}`,
-                }}
-                key={index}
-              />
-            );
-          })}
+        <Card
+          item={{
+            name: searchName,
+            url: `https://pokeapi.co/api/v2/pokemon/${searchName}`,
+          }}
+        />
       </div>
       <div className={styles.notification}>
-        {isFetchingNextPage && hasNextPage && !isLoading
+        {isFetchingNextPage && !isLoading
           ? 'Loading...'
-          : 'No search left'}
+          : (!isFetchingNextPage || isLoading) && !hasNextPage
+          ? 'No search left'
+          : null}
       </div>
 
       <div className={styles.observe} ref={ref}></div>

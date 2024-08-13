@@ -38,8 +38,10 @@ function Card({ item }) {
   });
 
   useEffect(() => {
-    if (detailData && data2 && data2.data.names.length > 2) {
-      const koName = data2.data.names[2]?.name;
+    if (detailData && data2 && data2.data.names?.length > 2) {
+      const koName =
+        data2.data.names.find(name => name.language.name === 'ko')?.name ||
+        data2.data.name;
       const color = data2.data.color.name;
       if (koName) {
         // detailData에 koName 추가

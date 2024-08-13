@@ -10,21 +10,20 @@ export const callPokeDetailData = async url => {
   return response;
 };
 
-export const getAllPokemon = async ({ pageParam = 0 }) => {
-  const response = await axios.get('https://pokeapi.co/api/v2/pokemon', {
+export const getAllPokemon = async ({ pageParam = 0, searchName }) => {
+  const url =
+    searchName == ''
+      ? 'https://pokeapi.co/api/v2/pokemon'
+      : `https://pokeapi.co/api/v2/pokemon/${searchName}`;
+
+  const response = await axios.get(url, {
     params: {
       limit: 30,
       offset: pageParam,
     },
   });
-  return response.data;
-};
 
-export const getSearchPokemon = async searchName => {
-  const response = await axios.get(
-    `https://pokeapi.co/api/v2/pokemon/${searchName}`,
-    {},
-  );
+  console.log(response.data);
   return response.data;
 };
 
